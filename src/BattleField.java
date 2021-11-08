@@ -1,27 +1,32 @@
+import java.util.ArrayList;
 
 public class BattleField {
-    public static final int n = 10;
-    private String[][] battleField = new String[n + 1][n + 1];
+    public static final int SIZE_OF_BATTLE_FIELD_SIDE = 10;
+    public final String ARRAY_OF_LETTERS = "ABCDEFGHIJ";
+    private ArrayList<Cells> battleField = new ArrayList<>();
 
     public void createEmptyBattleField() {
-        String alphabet = "ABCDEFGHIJK";
-        for (int i = 0; i < n + 1; i++) {
-            for (int j = 0; j < n + 1; j++) {
-                if (i == 0 && j == 0) battleField[i][j] = " ";
-                else if (i == 0) battleField[i][j] = alphabet.substring(j - 1 , j);
-                else if (j == 0) battleField[i][j] = i + " ";
-                else battleField[i][j] = "~";
+        int counter = 1;
+        for(int i = 0; i < SIZE_OF_BATTLE_FIELD_SIDE; i++) {
+            for(int j = 0; j < SIZE_OF_BATTLE_FIELD_SIDE; j++) {
+                battleField.add(new Cells(ARRAY_OF_LETTERS.substring(j, j + 1) + counter));
             }
+            counter++;
         }
-        checkBattleFieldCondition();
+
     }
 
+
     public void checkBattleFieldCondition() {
-        for (int i = 0; i < n + 1; i++) {
-            for (int j = 0; j < n + 1; j++) {
-                System.out.print(battleField[i][j] + " ");
-            }
-            System.out.println("");
+        for(Cells cells : battleField) {
+            System.out.println(cells.getCoordinate());
         }
     }
+
+    public ArrayList<Cells> getBattleField() {
+        return battleField;
+    }
+
+
+
 }
