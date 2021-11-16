@@ -1,8 +1,10 @@
-public class Cells {
+package battleField;
+
+public class Cell {
     private String coordinate;
     private boolean isFree = true;
 
-    public Cells(String coordinate) {
+    public Cell(String coordinate) {
         this.coordinate = coordinate;
     }
 

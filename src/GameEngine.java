@@ -1,5 +1,6 @@
+import battleField.BattleField;
 
-public class GameHelper {
+public class GameEngine {
     public void startGame() {
         BattleField bf = new BattleField();
         bf.createEmptyBattleField();
