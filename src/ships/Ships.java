@@ -1,5 +1,8 @@
 package ships;
 
+import java.util.ArrayList;
+import battleField.Cell;
+
 public enum Ships {
     SMALL(1, 4), MIDDLE(2, 3), BIG(3, 2),
     HUGE(4, 1);
@@ -11,6 +14,7 @@ public enum Ships {
 
     private final int deckCount;
     private final int shipsQuantity;
+    private ArrayList<Cell> cells = new ArrayList<Cell>();
 
     public int getDeckCount() {
         return deckCount;

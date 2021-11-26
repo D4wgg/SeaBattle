@@ -1,10 +1,11 @@
 package ships;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class GameSettings {
-    public ArrayList<Ships> loadSettings() {
+public final class GameSettings {
+    private GameSettings() {}
+
+    public static ArrayList<Ships> loadSettings() {
         ArrayList<Ships> userShipList = new ArrayList<>();
 
         ArrayList<Ships> shipsList = new ArrayList<>();
@@ -13,14 +14,18 @@ public class GameSettings {
         shipsList.add(Ships.MIDDLE);
         shipsList.add(Ships.SMALL);
 
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("Давайте настроим количество кораблей");
         for (Ships ships : shipsList) {
             System.out.printf("Укажите количество %d-х палубных кораблей,которое нужно расположить на доске" +
                     " максимальное значение %d", ships.getDeckCount(), ships.getShipsQuantity());
 
-            for(int i = 0; i < CheckUserInput.checkShipsQuantity(ships.getShipsQuantity()); i++) {
+            int shipsQuantity = CheckUserInput.checkShipsQuantity(ships.getShipsQuantity());
+            for(int i = 0; i < shipsQuantity; i++) {
                 userShipList.add(ships);
             }
+        }
+        for(Ships ships : userShipList) {
+            System.out.print(ships + " ");
         }
         return userShipList;
     }

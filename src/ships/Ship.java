@@ -1,30 +1,28 @@
 package ships;
 
-import battleField.*;
+import battleField.Cell;
+
+import java.util.ArrayList;
 
 public class Ship {
     private int length;
-    private Cell cell;
+    private ArrayList<Cell> shipLocation = new ArrayList<>();
 
-    public Ship(int length) {
+    public Ship() {}
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
         this.length = length;
     }
 
-    public void createShip(String[][] battleField) {
-        BattleField bf = new BattleField();
-        java.util.Random random = new java.util.Random();
-
-        int letterRatio = random.nextInt(10);
-        String letter = bf.ARRAY_OF_LETTERS.substring(letterRatio, letterRatio + 1);
-        int digit = random.nextInt(10) + 1;
-        String coordinate = letter + digit;
-
-        selectLocationForShip(coordinate, length);
+    public ArrayList<Cell> getShipLocation() {
+        return shipLocation;
     }
 
-
-    public void selectLocationForShip(String coordinate, int sizeOfShip) {
-
+    public void setShipLocation(ArrayList<Cell> shipLocation) {
+        this.shipLocation = shipLocation;
     }
-
 }
