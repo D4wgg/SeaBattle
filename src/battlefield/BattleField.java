@@ -1,4 +1,4 @@
-package battleField;
+package battlefield;
 
 import java.util.ArrayList;
 
@@ -17,16 +17,6 @@ public class BattleField {
             }
             counter++;
         }
-        checkBattleFieldCondition();
     }
-
-
-    public static void checkBattleFieldCondition() {
-        for(Cell cells : battleField) {
-            System.out.println(cells.getLetter() + cells.getDigit());
-        }
-    }
-
-
 
 }

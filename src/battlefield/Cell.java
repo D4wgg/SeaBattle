@@ -1,9 +1,10 @@
-package battleField;
+package battlefield;
 
 public class Cell {
     private String letter;
     private int digit;
     private boolean isFree = true;
+    private boolean gotShot = false;
 
     public Cell(String letter, int digit) {
         this.letter = letter;
@@ -14,16 +15,8 @@ public class Cell {
         return letter;
     }
 
-    public void setLetter(String letter) {
-        this.letter = letter;
-    }
-
     public int getDigit() {
         return digit;
-    }
-
-    public void setDigit(int digit) {
-        this.digit = digit;
     }
 
     public boolean isFree() {
@@ -32,5 +25,13 @@ public class Cell {
 
     public void setFree(boolean free) {
         isFree = free;
+    }
+
+    public boolean isGotShot() {
+        return gotShot;
+    }
+
+    public void setGotShot(boolean gotShot) {
+        this.gotShot = gotShot;
     }
 }
