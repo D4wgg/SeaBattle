@@ -19,11 +19,17 @@ public class GameEngine {
     }
 
     private static void gameplay() {
-        UserGuess.lol();
-        UserGuess.checkHit();
+        while (!ShipFactory.getPlacedOnDeckShips().isEmpty()) {
+            UserGuess.checkHit();
+        }
+        int shotCount = UserGuess.getShotCount();
+        int hit = UserGuess.getHit();
+        float accuracy = (float) shotCount / hit;
+
+        finishGame(shotCount, accuracy + "%");
     }
 
-    public static void finishGame(int shotCount, float accuracy) {
+    public static void finishGame(int shotCount, String accuracy) {
         System.out.println("Игра окончена!");
         System.out.println("Количество Ваших попыток " + shotCount + " а ваша точность " + accuracy);
     }

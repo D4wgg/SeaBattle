@@ -27,44 +27,46 @@ public class ShipFactory {
         for(Cell cell : BattleField.battleField) {
             if(cell.getLetter().equals(letter) && cell.getDigit() == digit) {
                 if(cell.isFree()) {
-                    selectLocationForShip(letter, digit, length);
+                    placedOnDeckShips.add(selectLocationForShip(letter, digit, length));
                     break;
                 } else selectFirstShipCell(length);
 
             }
         }
+
+        ProtectionShip.guardCellsAroundShip();
     }
 
-    public static void selectLocationForShip(String letter, int digit, int length) {
+    public static Ship selectLocationForShip(String letter, int digit, int length) {
         ArrayList<Cell> shipCells = new ArrayList<>();
 
         if (Checker.checkTop(letter,digit,length)) {
             for(int i = 0; i < length; i++) {
                 shipCells.add(BattleField.battleField.get(Checker.getCellIndex(letter, digit) - i * 10));
             }
-            placedOnDeckShips.add(new Ship(shipCells));
+            return new Ship(shipCells);
         }
         else if (Checker.checkLeft(letter,digit,length)) {
             for(int i = 0; i < length; i++) {
                 shipCells.add(BattleField.battleField.get(Checker.getCellIndex(letter, digit) - i));
             }
-            placedOnDeckShips.add(new Ship(shipCells));
+            return new Ship(shipCells);
         }
         else if (Checker.checkDown(letter,digit,length)) {
             for(int i = 0; i < length; i++) {
                 shipCells.add(BattleField.battleField.get(Checker.getCellIndex(letter, digit) + i * 10));
             }
-            placedOnDeckShips.add(new Ship(shipCells));
+            return new Ship(shipCells);
         }
         else if (Checker.checkRight(letter,digit,length)) {
             for(int i = 0; i < length; i++) {
                 shipCells.add(BattleField.battleField.get(Checker.getCellIndex(letter, digit) + i));
             }
-            placedOnDeckShips.add(new Ship(shipCells));
+            return new Ship(shipCells);
         }
         else selectFirstShipCell(length);
 
-        ProtectionShip.guardCellsAroundShip();
+        return new Ship(shipCells);
     }
 
     public static ArrayList<Ship> getPlacedOnDeckShips() {

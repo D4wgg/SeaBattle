@@ -1,9 +1,7 @@
 package gameplay;
 
 import battlefield.*;
-import programskeleton.GameEngine;
 import ships.*;
-
 
 public class UserGuess {
     private static int shotCount;
@@ -12,44 +10,37 @@ public class UserGuess {
     private UserGuess() {}
 
     public static void checkHit () {
-
-        while (!ShipFactory.getPlacedOnDeckShips().isEmpty()) {
-            String userInput = CheckUserInput.checkUserInput();
-            String letter = userInput.charAt(0) + "";
-            int digit = Integer.parseInt(userInput.substring(1));
-
-            if(BattleField.battleField.get(Checker.getCellIndex(letter, digit)).isGotShot()) {
-                System.out.println("Вы уже стреляли в эту клетку!");
-                CheckUserInput.checkUserInput();
-            }
-
-            for(Ship ship : ShipFactory.getPlacedOnDeckShips()) {
-                for (Cell cell : ship.getShipLocation()) {
-                    shotCount++;
-                    cell.setGotShot(true);
-                    if(cell == BattleField.battleField.get(Checker.getCellIndex(letter, digit))) {
-                        hit++;
-                        ship.getShipLocation().remove(cell);
-                        if(ship.getShipLocation().isEmpty()) {
-                            System.out.println("Потопил!");
-                            ShipFactory.getPlacedOnDeckShips().remove(ship);
-                            break;
-                        } else {
-                            System.out.println("Попал!");
-                            break;
-                        }
-
-                    } else {
-                        System.out.println("Чел, ты попуск, ты вообще играть не умеешь!!");
-                        break;
-                    }
+        boolean sunkenShip = false;
+        if (makeHit()) {
+            hit++;
+            for (Ship ship : ShipFactory.getPlacedOnDeckShips()) {
+                if (ship.getShipLocation().isEmpty()) {
+                    System.out.println("Потопил");
+                    ShipFactory.getPlacedOnDeckShips().remove(ship);
+                    sunkenShip = true;
+                    break;
                 }
-                break;
+            }
+            if (!sunkenShip) System.out.println("Попал");
+        } else System.out.println("Промазал, попуск");
+        shotCount++;
+    }
+
+    private static boolean makeHit() {
+        String userInput = CheckUserInput.checkUserInput();
+        String letter = userInput.charAt(0) + "";
+        int digit = Integer.parseInt(userInput.substring(1));
+
+        BattleField.battleField.get(Checker.getCellIndex(letter, digit)).setGotShot(true);
+        for (Ship ship : ShipFactory.getPlacedOnDeckShips()) {
+            for (Cell cell : ship.getShipLocation()) {
+                if (cell.equals(BattleField.battleField.get(Checker.getCellIndex(letter, digit)))) {
+                    ship.getShipLocation().remove(cell);
+                    return true;
+                }
             }
         }
-        float accuracy = hit / shotCount;
-        GameEngine.finishGame(shotCount, accuracy);
-
+        return false;
     }
 
     public static void lol() {
@@ -64,4 +55,7 @@ public class UserGuess {
         return shotCount;
     }
 
+    public static int getHit() {
+        return hit;
+    }
 }
