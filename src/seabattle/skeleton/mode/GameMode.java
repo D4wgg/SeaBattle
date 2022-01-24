@@ -23,13 +23,14 @@ public abstract class GameMode {
     }
 
     public boolean putShipOnField(String coordinate, ArrayList<Cell> battleField, ArrayList<Ship> placedShips) {
-        Iterator<ShipList> iterator = ShipQuantitySettings.getUserShipList().iterator();
+        List<ShipList> userShipList = ShipQuantitySettings.getUserShipList();
+        Iterator<ShipList> iterator = userShipList.iterator();
         while (iterator.hasNext()) {
             ShipList sl = iterator.next();
             Ship ship = ShipFactory.getPlacedShip(sl.getDeckCount(), coordinate, battleField);
             if (ship == null) return false;
             placedShips.add(ship);
-            ShipQuantitySettings.getUserShipList().remove(sl);
+            userShipList.remove(sl);
         }
         return true;
     }
