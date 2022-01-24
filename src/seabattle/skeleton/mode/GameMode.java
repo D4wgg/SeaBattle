@@ -1,0 +1,51 @@
+package seabattle.skeleton.mode;
+
+import seabattle.battlefield.Cell;
+import seabattle.instrument.InputChecker;
+import seabattle.ship.Ship;
+import seabattle.ship.ShipFactory;
+import seabattle.ship.ShipList;
+import seabattle.ship.ShipQuantitySettings;
+import seabattle.skeleton.gameplay.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Queue;
+import java.util.Scanner;
+
+public abstract class GameMode {
+    User user = new User(new Scanner(System.in).nextLine());
+    Bot bot = new Bot("Ботяра попущеный");
+
+    public abstract void startGame();
+
+    public abstract void gameplay();
+
+    public void finishGame(Player player) {
+        System.out.println("Победу одержал " + player.toString() + " всего за " + player.getShotCount() + " выстрелов");
+    }
+
+    public boolean putShipOnField(String coordinate, ArrayList<Cell> battleField, ArrayList<Ship> placedShips) {
+        Queue<ShipList> userShipList = ShipQuantitySettings.getUserShipList();
+        Iterator<ShipList> iterator = userShipList.iterator();
+        while (iterator.hasNext()) {
+            ShipList sl = iterator.next();
+            Ship ship = ShipFactory.getPlacedShip(sl.getDeckCount(), coordinate, battleField);
+            if (ship == null) return false;
+            placedShips.add(ship);
+            userShipList.remove(sl);
+        }
+        return true;
+    }
+
+    public void makeShot(ArrayList<Ship> placedShips, Player player) {
+        boolean end = false;
+        while (player.checkHit(InputChecker.checkUserInput())) {
+            end = placedShips.isEmpty();
+            if (end) {
+                finishGame(player);
+            }
+        }
+    }
+
+}
