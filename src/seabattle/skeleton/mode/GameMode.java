@@ -8,10 +8,7 @@ import seabattle.ship.ShipList;
 import seabattle.ship.ShipQuantitySettings;
 import seabattle.skeleton.gameplay.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class GameMode {
     User user = new User(new Scanner(System.in).nextLine());
@@ -22,18 +19,17 @@ public abstract class GameMode {
     public abstract void gameplay();
 
     public void finishGame(Player player) {
-        System.out.println("Победу одержал " + player.toString() + " всего за " + player.getShotCount() + " выстрелов");
+        System.out.println("Победу одержал " + player + " всего за " + player.getShotCount() + " выстрелов");
     }
 
     public boolean putShipOnField(String coordinate, ArrayList<Cell> battleField, ArrayList<Ship> placedShips) {
-        Queue<ShipList> userShipList = ShipQuantitySettings.getUserShipList();
-        Iterator<ShipList> iterator = userShipList.iterator();
+        Iterator<ShipList> iterator = ShipQuantitySettings.getUserShipList().iterator();
         while (iterator.hasNext()) {
             ShipList sl = iterator.next();
             Ship ship = ShipFactory.getPlacedShip(sl.getDeckCount(), coordinate, battleField);
             if (ship == null) return false;
             placedShips.add(ship);
-            userShipList.remove(sl);
+            ShipQuantitySettings.getUserShipList().remove(sl);
         }
         return true;
     }

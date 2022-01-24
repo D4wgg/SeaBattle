@@ -12,11 +12,9 @@ public class Launcher extends JFrame {
 
     public static void main(String[] args) {
         //new Launcher().buildGui();
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Выбери режим игры : обстрел поля оппонента(жми 1) или полноценный бой(жми 2)");
-        int choose = scanner.nextInt();
-        if (choose == 1) new GameEngine(new SinkEnemyShips());
-        else new GameEngine(new RealDuelVsBot());
+        if (new Scanner(System.in).nextInt() == 1) new GameEngine(new SinkEnemyShips()).startGame();
+        else new GameEngine(new RealDuelVsBot()).startGame();
     }
 
     private void buildGui() {

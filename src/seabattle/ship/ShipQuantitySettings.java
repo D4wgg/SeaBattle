@@ -4,13 +4,13 @@ import seabattle.instrument.ShipQuantityChecker;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.List;
 
 public final class ShipQuantitySettings {
     private ShipQuantitySettings() {}
-    private static Queue<ShipList> userShipList;
-    public static Queue<ShipList> loadSettings() {
-        userShipList = new PriorityQueue<>();
+    private static List<ShipList> userShipList;
+    public static List<ShipList> loadSettings() {
+        userShipList = new ArrayList<>();
 
         ArrayList<ShipList> shipModelList = new ArrayList<>();
         shipModelList.add(ShipList.HUGE);
@@ -32,7 +32,7 @@ public final class ShipQuantitySettings {
         return userShipList;
     }
 
-    public static Queue<ShipList> getUserShipList() {
+    public static List<ShipList> getUserShipList() {
         return userShipList;
     }
 }
